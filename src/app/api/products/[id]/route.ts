@@ -1,16 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
 import { FirestoreService } from "@/lib/firebase/firestore";
 import { verifyAuthToken } from "@/lib/utils/auth";
+import { productSchema } from "../route";
 import { z } from "zod";
 
-const productSchema = z.object({
-  name: z.string().min(1, "Product name is required"),
-  description: z.string().min(1, "Description is required"),
-  price: z.number().positive("Price must be greater than 0"),
-  stock: z.number().int().nonnegative("Stock must be 0 or greater"),
-  category: z.string().min(1, "Category is required"),
-  imageUrl: z.string().url().optional(),
-});
+export const productUpdateSchema = productSchema.partial();
 
 // ✅ GET /api/products – Get all products (simple query)
 export async function GET(request: NextRequest) {
@@ -47,8 +41,11 @@ export async function GET(request: NextRequest) {
   }
 }
 
-// ✅ POST /api/products – Create product
-export async function POST(request: NextRequest) {
+// ✅ PATCH /api/products/[id] – Update product
+export async function PATCH(
+  request: NextRequest,
+  { params }: { params: { id: string } } // <-- New: Access the product ID
+) {
   try {
     const userId = await verifyAuthToken(request);
     if (!userId) {
@@ -58,21 +55,28 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    const productId = params.id; // Get the ID from the URL
     const body = await request.json();
-    const validated = productSchema.parse(body);
 
-    const product = await FirestoreService.createProduct(userId, validated);
+    // 🛑 IMPORTANT: Use a schema that makes all fields optional for PATCH
+    const validated = productUpdateSchema.parse(body);
+
+    // Pass the productId along with the validated data
+    const product = await FirestoreService.updateProduct(
+      productId, // <-- Pass the ID to the service
+      validated
+    );
 
     return NextResponse.json(
       {
         success: true,
         data: product,
-        message: "Product created successfully",
+        message: "Product updated successfully",
       },
-      { status: 201 }
+      { status: 200 }
     );
   } catch (error: any) {
-    console.error("Create product error:", error);
+    console.error("Update product error:", error); // Changed log message
 
     if (error instanceof z.ZodError) {
       return NextResponse.json(
@@ -82,7 +86,43 @@ export async function POST(request: NextRequest) {
     }
 
     return NextResponse.json(
-      { success: false, error: error.message || "Failed to create product" },
+      { success: false, error: error.message || "Failed to update product" },
+      { status: 500 }
+    );
+  }
+}
+
+// ✅ DELETE /api/products/[id] – DELETE product
+
+export async function DELETE(
+  request: NextRequest,
+  { params }: { params: { id: string } } // Access the product ID
+) {
+  try {
+    const userId = await verifyAuthToken(request);
+    if (!userId) {
+      return NextResponse.json(
+        { success: false, error: "Unauthorized" },
+        { status: 401 }
+      );
+    }
+
+    const productId = params.id; // Get the ID from the URL
+
+    await FirestoreService.deleteProduct(productId); // Pass userId for ownership check
+
+    return NextResponse.json(
+      {
+        success: true,
+        message: "Product deleted successfully",
+      },
+      { status: 200 }
+    );
+  } catch (error: any) {
+    console.error("Delete product error:", error);
+
+    return NextResponse.json(
+      { success: false, error: error.message || "Failed to delete product" },
       { status: 500 }
     );
   }

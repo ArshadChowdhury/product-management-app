@@ -5,7 +5,7 @@ import { FirestoreService } from "@/lib/firebase/firestore";
 import { db } from "@/lib/firebase/config";
 import { z } from "zod";
 
-const productSchema = z.object({
+export const productSchema = z.object({
   name: z.string().min(1, "Product name is required"),
   description: z.string().min(1, "Description is required"),
   price: z.number().positive("Price must be greater than 0"),
