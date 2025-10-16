@@ -66,7 +66,7 @@ class ApiClient {
   }
 
   async updateProduct(id: string, data: UpdateProductDto) {
-    const response = await this.client.put(`/products/${id}`, data);
+    const response = await this.client.patch(`/products/${id}`, data);
     return response.data;
   }
 

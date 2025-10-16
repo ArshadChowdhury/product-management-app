@@ -25,7 +25,10 @@ export const login = createAsyncThunk(
   "auth/login",
   async (email: string, { rejectWithValue }) => {
     try {
-      const response = await axios.post("/auth", { email });
+      const response = await axios.post("api/auth", {
+        email,
+        password: "123456",
+      });
       return response.data;
     } catch (error: any) {
       return rejectWithValue(error.response?.data?.message || "Login failed");
@@ -51,6 +54,7 @@ const authSlice = createSlice({
     ) => {
       state.user = action.payload.user;
       state.token = action.payload.token;
+
       if (typeof window !== "undefined") {
         localStorage.setItem("token", action.payload.token);
       }
@@ -67,7 +71,7 @@ const authSlice = createSlice({
         state.user = { email: action.meta.arg };
         state.token = action.payload.token;
         if (typeof window !== "undefined") {
-          localStorage.setItem("token", action.payload.token);
+          localStorage.setItem("token", action.payload.data.token);
         }
       })
       .addCase(login.rejected, (state, action) => {

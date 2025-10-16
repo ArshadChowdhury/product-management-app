@@ -6,8 +6,11 @@ import { z } from "zod";
 
 export const productUpdateSchema = productSchema.partial();
 
-// ✅ GET /api/products – Get all products (simple query)
-export async function GET(request: NextRequest) {
+// ✅ GET /api/products/[id] – Get product by ID
+export async function GET(
+  request: NextRequest,
+  { params }: { params: { id: string } } // <-- Extracts the ID from the URL path
+) {
   try {
     const userId = await verifyAuthToken(request);
     if (!userId) {
@@ -17,25 +20,26 @@ export async function GET(request: NextRequest) {
       );
     }
 
-    const searchParams = request.nextUrl.searchParams;
-    const category = searchParams.get("category") || undefined;
-    const search = searchParams.get("search")?.toLowerCase() || undefined;
-    const pageSize = parseInt(searchParams.get("pageSize") || "10");
+    const productId = params.id;
 
-    const { products } = await FirestoreService.getProducts(userId, {
-      category,
-      search,
-      pageSize,
-    });
+    // Call the service to fetch the product
+    const product = await FirestoreService.getProductById(userId, productId);
+
+    if (!product) {
+      return NextResponse.json(
+        { success: false, error: `Product with ID ${productId} not found.` },
+        { status: 404 }
+      );
+    }
 
     return NextResponse.json({
       success: true,
-      data: products,
+      data: product,
     });
   } catch (error: any) {
-    console.error("Get products error:", error);
+    console.error(`Get product by ID error for ${params.id}:`, error);
     return NextResponse.json(
-      { success: false, error: error.message || "Failed to fetch products" },
+      { success: false, error: error.message || "Failed to fetch product" },
       { status: 500 }
     );
   }

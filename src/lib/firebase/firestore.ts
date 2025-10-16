@@ -213,10 +213,31 @@ export const FirestoreService = {
     return { products };
   },
 
-  async getProduct(id: string) {
-    const docRef = doc(db, "products", id);
+  async getProductById(
+    userId: string,
+    productId: string
+  ): Promise<Product | null> {
+    const docRef = doc(db, "products", productId);
     const docSnap = await getDoc(docRef);
-    return docSnap.exists() ? { id: docSnap.id, ...docSnap.data() } : null;
+
+    if (!docSnap.exists()) {
+      return null; // Product not found
+    }
+
+    const data = docSnap.data() as Product & DocumentData;
+
+    // Crucial Ownership Check: Ensure the user owns the product before returning it
+    if (data.userId !== userId) {
+      // You could throw an error or return null/undefined based on desired behavior
+      // Returning null for a soft fail, or throw for a hard fail (e.g., 403 Forbidden logic)
+      // For security, it's safer to treat it as not found or unauthorized.
+      throw new Error("Unauthorized to access this product.");
+    }
+
+    return {
+      id: docSnap.id,
+      ...data,
+    };
   },
 
   async createProduct(userId: string, data: any) {
