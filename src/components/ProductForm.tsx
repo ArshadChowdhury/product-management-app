@@ -303,9 +303,9 @@
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useCreateProduct, useUpdateProduct } from "@/hooks/useProducts";
-import { productSchema, type ProductFormData } from "@/lib/validation/schemas";
-import { Product } from "@/types/product";
+import { useCreateProduct, useUpdateProduct } from "../hooks/useProducts";
+import { productSchema, type ProductFormData } from "../lib/validation/schemas";
+import { Product } from "../types/product";
 import { AlertCircle, Loader2, Check, X, ChevronDown } from "lucide-react";
 import { motion } from "framer-motion";
 

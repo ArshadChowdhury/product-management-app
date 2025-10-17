@@ -1,6 +1,10 @@
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
-import { apiClient } from "@/lib/api/client";
-import { Product, CreateProductDto, UpdateProductDto } from "@/types/product";
+import { apiClient } from "../../lib/api/client";
+import {
+  Product,
+  CreateProductDto,
+  UpdateProductDto,
+} from "../../types/product";
 
 interface ProductsState {
   products: Product[];

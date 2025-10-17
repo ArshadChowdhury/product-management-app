@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import ProductForm from "@/components/ProductForm";
+import ProductForm from "../../../components/ProductForm";
 import { ArrowLeft, ShoppingBag } from "lucide-react";
 
 export default function CreateProductPage() {

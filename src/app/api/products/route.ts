@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
-import { verifyAuthToken } from "@/lib/utils/auth";
-import { FirestoreService } from "@/lib/firebase/firestore";
+import { verifyAuthToken } from "../../../lib/firebase/verifyAuthToken";
+import { FirestoreService } from "../../../lib/firebase/firestore";
 import { z } from "zod";
 
 export const productSchema = z.object({

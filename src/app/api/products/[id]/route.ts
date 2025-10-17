@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
-import { FirestoreService } from "@/lib/firebase/firestore";
-import { verifyAuthToken } from "@/lib/utils/auth";
+import { FirestoreService } from "../../../../lib/firebase/firestore";
+import { verifyAuthToken } from "../../../../lib/firebase/verifyAuthToken";
 import { productSchema } from "../route";
 import { z } from "zod";
 

@@ -855,11 +855,11 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { useDebounce } from "@/hooks/useDebounce";
+import { useDebounce } from "../../hooks/useDebounce";
 import { useRouter } from "next/navigation";
-import { useAppDispatch } from "@/store/hooks";
-import { logout } from "@/store/slices/authSlice";
-import { useProducts, useDeleteProduct } from "@/hooks/useProducts";
+import { useAppDispatch } from "../../store/hooks";
+import { logout } from "../../store/slices/authSlice";
+import { useProducts, useDeleteProduct } from "../../hooks/useProducts";
 import {
   Search,
   Plus,
@@ -873,9 +873,9 @@ import {
   ChevronLeft,
   ChevronRight,
 } from "lucide-react";
-import DeleteModal from "@/components/DeleteModal";
+import DeleteModal from "../../components/DeleteModal";
 import { motion, AnimatePresence } from "framer-motion";
-import { Product } from "@/types/product";
+import { Product } from "../../types/product";
 import Image from "next/image";
 
 const CATEGORIES = [

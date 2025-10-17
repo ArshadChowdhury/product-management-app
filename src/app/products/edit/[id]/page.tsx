@@ -70,8 +70,8 @@
 "use client";
 
 import { useRouter, useParams } from "next/navigation";
-import { useProduct } from "@/hooks/useProducts";
-import ProductForm from "@/components/ProductForm";
+import { useProduct } from "../../../../hooks/useProducts";
+import ProductForm from "../../../../components/ProductForm";
 import { ArrowLeft, ShoppingBag, Loader2 } from "lucide-react";
 
 export default function EditProductPage() {

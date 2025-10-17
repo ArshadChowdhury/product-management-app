@@ -236,7 +236,7 @@
 
 import { useState } from "react";
 import { useRouter, useParams } from "next/navigation";
-import { useProduct, useDeleteProduct } from "@/hooks/useProducts";
+import { useProduct, useDeleteProduct } from "../../../hooks/useProducts";
 import {
   ArrowLeft,
   ShoppingBag,
@@ -247,7 +247,7 @@ import {
   DollarSign,
   Tag,
 } from "lucide-react";
-import DeleteModal from "@/components/DeleteModal";
+import DeleteModal from "../../../components/DeleteModal";
 import { motion } from "framer-motion";
 import Image from "next/image";
 

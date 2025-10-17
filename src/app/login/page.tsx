@@ -4,11 +4,11 @@ import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useAppDispatch, useAppSelector } from "@/store/hooks";
-import { login } from "@/store/slices/authSlice";
+import { useAppDispatch, useAppSelector } from "../../store/hooks";
+import { login } from "../../store/slices/authSlice";
 import { ShoppingBag, Mail, Loader2, AlertCircle } from "lucide-react";
 import toast from "react-hot-toast";
-import { loginSchema, type LoginFormData } from "@/lib/validation/schemas";
+import { loginSchema, type LoginFormData } from "../../lib/validation/schemas";
 import { motion } from "framer-motion";
 
 export default function LoginPage() {

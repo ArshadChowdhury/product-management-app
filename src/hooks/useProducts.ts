@@ -1,6 +1,6 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { apiClient } from "@/lib/api/client";
-import { Product, CreateProductDto, UpdateProductDto } from "@/types/product";
+import { apiClient } from "../lib/api/client";
+import { Product, CreateProductDto, UpdateProductDto } from "../types/product";
 import toast from "react-hot-toast";
 
 // Query Keys

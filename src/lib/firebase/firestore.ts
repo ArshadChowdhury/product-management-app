@@ -12,7 +12,7 @@ import {
   DocumentData,
 } from "firebase/firestore";
 import { db } from "./config";
-import { Product } from "@/types/product";
+import { Product } from "../../types/product";
 
 export const FirestoreService = {
   async getProducts(
