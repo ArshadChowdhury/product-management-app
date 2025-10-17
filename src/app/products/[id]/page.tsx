@@ -132,7 +132,7 @@ export default function ProductDetailsPage() {
             </p>
 
             {/* Stats Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+            {/* <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
               <motion.div
                 whileHover={{ scale: 1.05 }}
                 className="bg-gradient-to-br from-kobicha to-walnut-brown p-6 rounded-xl border border-blue-200"
@@ -168,6 +168,69 @@ export default function ProductDetailsPage() {
                   <p className="text-sm font-semibold text-black">Category</p>
                 </div>
                 <p className="text-2xl font-bold text-black">
+                  {product.category}
+                </p>
+              </motion.div>
+            </div> */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+              {/* Price Card */}
+              <motion.div
+                whileHover={{ y: -5, scale: 1.02 }}
+                transition={{ type: "spring", stiffness: 300 }}
+                className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-kobicha to-walnut-brown p-6 shadow-lg border border-blue-200"
+              >
+                <div className="absolute inset-0 bg-gradient-to-tr from-white/10 to-transparent opacity-50 pointer-events-none" />
+                <div className="flex items-center justify-between mb-3">
+                  <div className="flex items-center gap-2">
+                    <DollarSign className="w-6 h-6 text-white/90" />
+                    <p className="text-sm font-medium text-white/80 uppercase tracking-wide">
+                      Price
+                    </p>
+                  </div>
+                  <span className="text-xs text-white/60 font-medium">USD</span>
+                </div>
+                <p className="text-4xl font-bold text-white">
+                  ${product.price.toFixed(2)}
+                </p>
+              </motion.div>
+
+              {/* Stock Card */}
+              <motion.div
+                whileHover={{ y: -5, scale: 1.02 }}
+                transition={{ type: "spring", stiffness: 300 }}
+                className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-battleship-gray to-sepia p-6 shadow-lg border border-purple-200"
+              >
+                <div className="absolute inset-0 bg-gradient-to-tr from-white/10 to-transparent opacity-50 pointer-events-none" />
+                <div className="flex items-center justify-between mb-3">
+                  <div className="flex items-center gap-2">
+                    <Package className="w-6 h-6 text-white/90" />
+                    <p className="text-sm font-medium text-white/80 uppercase tracking-wide">
+                      Stock
+                    </p>
+                  </div>
+                  <span className="text-xs text-white/60 font-medium">
+                    Available
+                  </span>
+                </div>
+                <p className="text-4xl font-bold text-white">{product.stock}</p>
+              </motion.div>
+
+              {/* Category Card */}
+              <motion.div
+                whileHover={{ y: -5, scale: 1.02 }}
+                transition={{ type: "spring", stiffness: 300 }}
+                className="relative overflow-hidden rounded-2xl bg-white p-6 shadow-md border border-cadet-gray"
+              >
+                <div className="absolute inset-0 bg-gradient-to-br from-gray-600 to-transparent opacity-60 pointer-events-none" />
+                <div className="flex items-center justify-between mb-3">
+                  <div className="flex items-center gap-2">
+                    <Tag className="w-6 h-6 text-black/80" />
+                    <p className="text-sm font-medium text-black/60 uppercase tracking-wide">
+                      Category
+                    </p>
+                  </div>
+                </div>
+                <p className="text-3xl font-semibold text-black">
                   {product.category}
                 </p>
               </motion.div>

@@ -41,6 +41,24 @@ const nextConfig: NextConfig = {
         port: "",
         pathname: "/v/**",
       },
+      {
+        protocol: "https",
+        hostname: "plus.unsplash.com",
+        port: "",
+        pathname: "/premium_photo**",
+      },
+      {
+        protocol: "https",
+        hostname: "www.shutterstock.com",
+        port: "",
+        pathname: "/image-photo/**",
+      },
+      {
+        protocol: "https",
+        hostname: "cdn.thewirecutter.com",
+        port: "",
+        pathname: "/wp-content/**",
+      },
     ],
   },
 };

@@ -100,7 +100,6 @@ export default function ProductsPage() {
             </div>
 
             <div className="flex items-center gap-3">
-             
               <button
                 onClick={handleLogout}
                 className="flex items-center space-x-2 text-gray-600 hover:text-gray-900 transition-colors px-4 py-2 rounded-lg hover:bg-gray-100 cursor-pointer"
@@ -215,7 +214,7 @@ export default function ProductsPage() {
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8"
+              className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8"
             >
               <AnimatePresence mode="popLayout">
                 {products.map((product: Product, index: number) => (
