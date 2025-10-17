@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { AuthService } from "@/lib/firebase/auth";
+import { AuthService } from "../../../lib/firebase/auth";
 import { z } from "zod";
 
 const loginSchema = z.object({
