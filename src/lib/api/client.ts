@@ -1,5 +1,5 @@
 import axios, { AxiosInstance } from "axios";
-import { Product, CreateProductDto, UpdateProductDto } from "@/types/product";
+import { CreateProductDto, UpdateProductDto } from "@/types/product";
 
 class ApiClient {
   private client: AxiosInstance;

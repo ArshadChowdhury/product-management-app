@@ -204,7 +204,7 @@ export default function ProductDetailsPage() {
                 className="flex-1 bg-gradient-to-r from-blue-600 to-purple-600 text-white py-3 rounded-xl font-semibold hover:shadow-lg transform hover:-translate-y-0.5 transition-all flex items-center justify-center gap-2"
               >
                 <Edit2 className="w-5 h-5" />
-                <span>Edit Product</span>
+                <span>Edit</span>
               </button>
               <button
                 onClick={() => setShowDeleteModal(true)}

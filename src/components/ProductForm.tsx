@@ -271,7 +271,7 @@ export default function ProductForm({ product, mode }: ProductFormProps) {
             ) : (
               <>
                 <Check className="w-5 h-5" />
-                {mode === "edit" ? "Update Product" : "Create Product"}
+                {mode === "edit" ? "Update" : "Create"}
               </>
             )}
           </button>
