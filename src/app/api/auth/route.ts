@@ -11,7 +11,7 @@ const loginSchema = z.object({
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const { action, ...credentials } = body;
+    const { ...credentials } = body;
 
     const validated = loginSchema.parse(credentials);
     const result = await AuthService.signIn(

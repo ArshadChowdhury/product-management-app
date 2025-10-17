@@ -1,13 +1,13 @@
 @import "tailwindcss";
 
-/* @layer base {
-  * {
-    @apply border-border;
-  }
-  body {
-    @apply bg-background text-foreground;
-  }
-} */
+@theme inline {
+  --font-poppins: var(--font-poppins);
+  --color-sepia: #5b3000;
+  --color-kobicha: #66462c;
+  --color-walnut-brown: #726953;
+  --color-battleship-gray: #76877d;
+  --color-cadet-gray: #82a6b1;
+}
 
 @layer utilities {
   .scrollbar-hide::-webkit-scrollbar {

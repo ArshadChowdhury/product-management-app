@@ -15,13 +15,13 @@ export default function CreateProductPage() {
           <div className="flex items-center h-16 gap-4">
             <button
               onClick={() => router.push("/products")}
-              className="flex items-center gap-2 text-gray-600 hover:text-gray-900 transition-colors px-3 py-2 rounded-lg hover:bg-gray-100"
+              className="cursor-pointer flex items-center gap-2 text-gray-600 hover:text-gray-900 transition-colors px-3 py-2 rounded-lg hover:bg-gray-100"
             >
               <ArrowLeft className="w-5 h-5" />
               <span className="font-medium">Back</span>
             </button>
             <div className="flex items-center gap-2">
-              <ShoppingBag className="w-5 h-5 text-blue-600" />
+              <ShoppingBag className="w-5 h-5 text-sepia" />
               <span className="font-semibold text-gray-900">ProductHub</span>
             </div>
           </div>

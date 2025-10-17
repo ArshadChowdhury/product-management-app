@@ -53,14 +53,14 @@ export default function LoginPage() {
             initial={{ scale: 0 }}
             animate={{ scale: 1 }}
             transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
-            className="bg-gradient-to-br from-blue-600 to-purple-600 p-4 rounded-2xl shadow-lg"
+            className="bg-gradient-to-br from-walnut-brown to-kobicha p-4 rounded-2xl shadow-lg"
           >
             <ShoppingBag className="w-10 h-10 text-white" />
           </motion.div>
         </div>
 
-        <h1 className="text-4xl font-bold text-center mb-2 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-          Welcome Back
+        <h1 className="text-4xl font-bold text-center mb-2 bg-gradient-to-r from-walnut-brown to-kobicha bg-clip-text text-transparent">
+          Welcome
         </h1>
         <p className="text-gray-600 text-center mb-8">
           Sign in to manage your products
@@ -83,11 +83,11 @@ export default function LoginPage() {
               Email Address
             </label>
             <div className="relative">
-              <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+              <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-6 h-6" />
               <input
                 type="email"
                 {...register("email")}
-                className={`w-full pl-11 pr-4 py-3 border rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all ${
+                className={`w-full pl-12 pr-4 py-3 border rounded-xl transition-all focus:outline-none ${
                   errors.email ? "border-red-500" : "border-gray-300"
                 }`}
                 placeholder="you@example.com"
@@ -109,7 +109,7 @@ export default function LoginPage() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white py-3 rounded-xl font-semibold hover:shadow-lg transform hover:-translate-y-0.5 transition-all disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none flex items-center justify-center gap-2"
+            className="w-full bg-gradient-to-r from-walnut-brown to-kobicha text-white py-3 rounded-xl font-semibold hover:shadow-lg transform hover:-translate-y-0.5 transition-all disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none flex items-center justify-center gap-2 cursor-pointer"
           >
             {loading ? (
               <>
@@ -123,7 +123,7 @@ export default function LoginPage() {
         </form>
 
         <p className="text-center text-sm text-gray-500 mt-6">
-          Enter the email you used in your job application
+          Enter the email - arshadchowdhury46@gmail.com
         </p>
       </motion.div>
     </div>
