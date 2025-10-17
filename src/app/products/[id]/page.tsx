@@ -132,46 +132,7 @@ export default function ProductDetailsPage() {
             </p>
 
             {/* Stats Grid */}
-            {/* <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-              <motion.div
-                whileHover={{ scale: 1.05 }}
-                className="bg-gradient-to-br from-kobicha to-walnut-brown p-6 rounded-xl border border-blue-200"
-              >
-                <div className="flex items-center gap-3 mb-2">
-                  <DollarSign className="w-6 h-6 text-white" />
-                  <p className="text-sm font-semibold text-white">Price</p>
-                </div>
-                <p className="text-3xl font-bold text-white">
-                  ${product.price.toFixed(2)}
-                </p>
-              </motion.div>
 
-              <motion.div
-                whileHover={{ scale: 1.05 }}
-                className="bg-gradient-to-br from-battleship-gray to-sepia p-6 rounded-xl border border-purple-200"
-              >
-                <div className="flex items-center gap-3 mb-2">
-                  <Package className="w-6 h-6 text-white" />
-                  <p className="text-sm font-semibold text-white">
-                    Stock Available
-                  </p>
-                </div>
-                <p className="text-3xl font-bold text-white">{product.stock}</p>
-              </motion.div>
-
-              <motion.div
-                whileHover={{ scale: 1.05 }}
-                className="bg-white p-6 rounded-xl border border-cadet-gray"
-              >
-                <div className="flex items-center gap-3 mb-2">
-                  <Tag className="w-6 h-6 text-black" />
-                  <p className="text-sm font-semibold text-black">Category</p>
-                </div>
-                <p className="text-2xl font-bold text-black">
-                  {product.category}
-                </p>
-              </motion.div>
-            </div> */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
               {/* Price Card */}
               <motion.div
