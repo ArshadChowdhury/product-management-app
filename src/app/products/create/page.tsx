@@ -22,7 +22,9 @@ export default function CreateProductPage() {
             </button>
             <div className="flex items-center gap-2">
               <ShoppingBag className="w-5 h-5 text-sepia" />
-              <span className="font-semibold text-gray-900">ProductHub</span>
+              <span className="font-semibold text-gray-900">
+                Product Catalog
+              </span>
             </div>
           </div>
         </div>
