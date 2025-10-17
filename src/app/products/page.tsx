@@ -37,12 +37,12 @@ const CATEGORIES = [
   "Food",
   "Other",
 ];
-const ITEMS_PER_PAGE = 9;
+const ITEMS_PER_PAGE = 3;
 
 export default function ProductsPage() {
   const router = useRouter();
   const dispatch = useAppDispatch();
-  const { products, loading, error, searchTerm, selectedCategory } =
+  const { products, count, loading, error, searchTerm, selectedCategory } =
     useAppSelector((state) => state.products);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [productToDelete, setProductToDelete] = useState<{
@@ -53,15 +53,25 @@ export default function ProductsPage() {
   const [localSearch, setLocalSearch] = useState("");
 
   useEffect(() => {
-    dispatch(fetchProducts({}));
-  }, [dispatch]);
+    dispatch(
+      fetchProducts({
+        page: currentPage,
+        search: searchTerm,
+        category: selectedCategory === "all" ? undefined : selectedCategory,
+      })
+    );
+  }, [dispatch, currentPage, searchTerm, selectedCategory]);
+
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [searchTerm, selectedCategory]);
 
   // Debounced search
   useEffect(() => {
     const timer = setTimeout(() => {
       dispatch(setSearchTerm(localSearch));
       setCurrentPage(1);
-    }, 300);
+    }, 500);
 
     return () => clearTimeout(timer);
   }, [localSearch, dispatch]);
@@ -90,23 +100,7 @@ export default function ProductsPage() {
     toast.success("Logged out successfully");
   };
 
-  // Filtered and paginated products
-  const filteredProducts = useMemo(() => {
-    return products.filter((product) => {
-      const matchesSearch = product.name
-        .toLowerCase()
-        .includes(searchTerm.toLowerCase());
-      const matchesCategory =
-        selectedCategory === "all" || product.category === selectedCategory;
-      return matchesSearch && matchesCategory;
-    });
-  }, [products, searchTerm, selectedCategory]);
-
-  const totalPages = Math.ceil(filteredProducts.length / ITEMS_PER_PAGE);
-  const paginatedProducts = useMemo(() => {
-    const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
-    return filteredProducts.slice(startIndex, startIndex + ITEMS_PER_PAGE);
-  }, [filteredProducts, currentPage]);
+  const totalPages = Math.ceil(count / ITEMS_PER_PAGE);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50">
@@ -193,8 +187,7 @@ export default function ProductsPage() {
           {/* Results count */}
           {!loading && (
             <div className="mt-4 text-sm text-gray-600">
-              Showing {paginatedProducts.length} of {filteredProducts.length}{" "}
-              products
+              Showing {products.length} of {count} products
             </div>
           )}
         </motion.div>
@@ -221,7 +214,7 @@ export default function ProductsPage() {
         {/* Products Grid */}
         {!loading && (
           <>
-            {paginatedProducts.length > 0 ? (
+            {products.length > 0 ? (
               <>
                 <motion.div
                   initial={{ opacity: 0 }}
@@ -229,7 +222,7 @@ export default function ProductsPage() {
                   className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8"
                 >
                   <AnimatePresence>
-                    {paginatedProducts.map((product, index) => (
+                    {products.map((product, index) => (
                       <motion.div
                         key={product.id}
                         initial={{ opacity: 0, y: 20 }}
@@ -321,44 +314,54 @@ export default function ProductsPage() {
                   <motion.div
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
-                    className="flex justify-center items-center gap-2"
+                    className="flex justify-center items-center gap-2 mt-8"
                   >
+                    {/* Previous Button */}
                     <button
                       onClick={() =>
                         setCurrentPage((prev) => Math.max(prev - 1, 1))
                       }
                       disabled={currentPage === 1}
-                      className="p-2 rounded-lg bg-white border border-gray-300 text-gray-700 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                      className="p-2 rounded-lg bg-white border border-gray-300 text-gray-700 hover:bg-gray-50 
+                 disabled:opacity-50 disabled:cursor-not-allowed transition-colors flex items-center gap-1"
                     >
-                      <ChevronLeft className="w-5 h-5" />
+                      <ChevronLeft className="w-4 h-4" />
+                      <span className="hidden sm:inline">Previous</span>
                     </button>
 
-                    <div className="flex gap-2">
+                    {/* Page Numbers */}
+                    <div className="flex gap-1">
                       {Array.from({ length: totalPages }, (_, i) => i + 1).map(
-                        (page) => (
-                          <button
-                            key={page}
-                            onClick={() => setCurrentPage(page)}
-                            className={`w-10 h-10 rounded-lg font-medium transition-all ${
-                              currentPage === page
-                                ? "bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-md"
-                                : "bg-white border border-gray-300 text-gray-700 hover:bg-gray-50"
-                            }`}
-                          >
-                            {page}
-                          </button>
-                        )
+                        (page) => {
+                          const isActive = page === currentPage;
+                          return (
+                            <button
+                              key={page}
+                              onClick={() => setCurrentPage(page)}
+                              className={`w-9 h-9 rounded-lg font-medium transition-all ${
+                                isActive
+                                  ? "bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-md"
+                                  : "bg-white border border-gray-300 text-gray-700 hover:bg-gray-50"
+                              }`}
+                            >
+                              {page}
+                            </button>
+                          );
+                        }
                       )}
                     </div>
 
+                    {/* Next Button */}
                     <button
                       onClick={() =>
                         setCurrentPage((prev) => Math.min(prev + 1, totalPages))
                       }
                       disabled={currentPage === totalPages}
-                      className="p-2 rounded-lg bg-white border border-gray-300 text-gray-700 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                      className="p-2 rounded-lg bg-white border border-gray-300 text-gray-700 hover:bg-gray-50 
+                 disabled:opacity-50 disabled:cursor-not-allowed transition-colors flex items-center gap-1"
                     >
-                      <ChevronRight className="w-5 h-5" />
+                      <span className="hidden sm:inline">Next</span>
+                      <ChevronRight className="w-4 h-4" />
                     </button>
                   </motion.div>
                 )}

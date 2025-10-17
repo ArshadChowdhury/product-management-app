@@ -9,21 +9,19 @@ export const productSchema = z.object({
   description: z
     .string()
     .min(10, "Description must be at least 10 characters")
-    .max(500, "Description too long"),
+    .max(600, "Description too long"),
   price: z.coerce
     .number()
     .positive("Price must be greater than 0")
-    .max(1000000, "Price too high"),
+    .max(100000, "Price too high"),
   stock: z.coerce
     .number()
     .int("Stock must be a whole number")
-    .nonnegative("Stock cannot be negative")
-    .max(100000, "Stock too high"),
+    .positive("Stock must be greater than 0")
+    .max(10000, "Stock too high"),
   category: z.enum(
     ["Electronics", "Fitness", "Home", "Fashion", "Books", "Food", "Other"],
-    {
-      error: () => ({ message: "Please select a category" }),
-    }
+    { error: () => ({ message: "Please select a category" }) }
   ),
   imageUrl: z.string().url("Invalid URL").optional().or(z.literal("")),
 });

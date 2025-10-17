@@ -28,7 +28,7 @@ export default function DeleteModal({
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={onClose}
-            className="fixed inset-0 bg-black bg-opacity-50 z-50"
+            className="fixed inset-0 backdrop-blur-sm bg-opacity-50 z-50"
           />
 
           {/* Modal */}
@@ -55,8 +55,8 @@ export default function DeleteModal({
               </h3>
               <p className="text-gray-600 mb-6 text-center">
                 Are you sure you want to delete{" "}
-                <span className="font-semibold">"{productName}"</span>? This
-                action cannot be undone.
+                <span className="font-semibold">&quot;{productName}&quot;</span>
+                ? This action cannot be undone.
               </p>
 
               <div className="flex gap-3">

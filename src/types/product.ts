@@ -20,8 +20,6 @@ export interface CreateProductDto {
   imageUrl?: string;
 }
 
-export interface UpdateProductDto extends Partial<CreateProductDto> {}
-
 export const CATEGORIES = [
   "Electronics",
   "Fitness",
@@ -32,4 +30,5 @@ export const CATEGORIES = [
   "Other",
 ] as const;
 
+export type UpdateProductDto = Partial<CreateProductDto>;
 export type Category = (typeof CATEGORIES)[number];

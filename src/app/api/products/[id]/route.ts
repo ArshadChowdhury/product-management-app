@@ -6,10 +6,10 @@ import { z } from "zod";
 
 export const productUpdateSchema = productSchema.partial();
 
-// ✅ GET /api/products/[id] – Get product by ID
+// ✅ GET /api/products/[id]
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } } // <-- Extracts the ID from the URL path
+  context: { params: Promise<{ id: string }> }
 ) {
   try {
     const userId = await verifyAuthToken(request);
@@ -20,11 +20,9 @@ export async function GET(
       );
     }
 
-    const productId = params.id;
+    const { id: productId } = await context.params;
 
-    // Call the service to fetch the product
     const product = await FirestoreService.getProductById(userId, productId);
-
     if (!product) {
       return NextResponse.json(
         { success: false, error: `Product with ID ${productId} not found.` },
@@ -32,12 +30,9 @@ export async function GET(
       );
     }
 
-    return NextResponse.json({
-      success: true,
-      data: product,
-    });
+    return NextResponse.json({ success: true, data: product });
   } catch (error: any) {
-    console.error(`Get product by ID error for ${params.id}:`, error);
+    console.error(`Get product by ID error:`, error);
     return NextResponse.json(
       { success: false, error: error.message || "Failed to fetch product" },
       { status: 500 }
@@ -45,10 +40,10 @@ export async function GET(
   }
 }
 
-// ✅ PATCH /api/products/[id] – Update product
+// ✅ PATCH /api/products/[id]
 export async function PATCH(
   request: NextRequest,
-  { params }: { params: { id: string } } // <-- New: Access the product ID
+  context: { params: Promise<{ id: string }> }
 ) {
   try {
     const userId = await verifyAuthToken(request);
@@ -59,36 +54,25 @@ export async function PATCH(
       );
     }
 
-    const productId = params.id; // Get the ID from the URL
+    const { id: productId } = await context.params;
     const body = await request.json();
-
-    // 🛑 IMPORTANT: Use a schema that makes all fields optional for PATCH
     const validated = productUpdateSchema.parse(body);
 
-    // Pass the productId along with the validated data
-    const product = await FirestoreService.updateProduct(
-      productId, // <-- Pass the ID to the service
-      validated
-    );
+    const product = await FirestoreService.updateProduct(productId, validated);
 
-    return NextResponse.json(
-      {
-        success: true,
-        data: product,
-        message: "Product updated successfully",
-      },
-      { status: 200 }
-    );
+    return NextResponse.json({
+      success: true,
+      data: product,
+      message: "Product updated successfully",
+    });
   } catch (error: any) {
-    console.error("Update product error:", error); // Changed log message
-
+    console.error("Update product error:", error);
     if (error instanceof z.ZodError) {
       return NextResponse.json(
         { success: false, error: error.message },
         { status: 400 }
       );
     }
-
     return NextResponse.json(
       { success: false, error: error.message || "Failed to update product" },
       { status: 500 }
@@ -96,11 +80,10 @@ export async function PATCH(
   }
 }
 
-// ✅ DELETE /api/products/[id] – DELETE product
-
+// ✅ DELETE /api/products/[id]
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { id: string } } // Access the product ID
+  context: { params: Promise<{ id: string }> }
 ) {
   try {
     const userId = await verifyAuthToken(request);
@@ -111,20 +94,15 @@ export async function DELETE(
       );
     }
 
-    const productId = params.id; // Get the ID from the URL
+    const { id: productId } = await context.params;
+    await FirestoreService.deleteProduct(productId);
 
-    await FirestoreService.deleteProduct(productId); // Pass userId for ownership check
-
-    return NextResponse.json(
-      {
-        success: true,
-        message: "Product deleted successfully",
-      },
-      { status: 200 }
-    );
+    return NextResponse.json({
+      success: true,
+      message: "Product deleted successfully",
+    });
   } catch (error: any) {
     console.error("Delete product error:", error);
-
     return NextResponse.json(
       { success: false, error: error.message || "Failed to delete product" },
       { status: 500 }

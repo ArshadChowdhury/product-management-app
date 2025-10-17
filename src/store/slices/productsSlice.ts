@@ -11,6 +11,7 @@ interface ProductsState {
   selectedCategory: string;
   totalPages: number;
   currentPage: number;
+  count: number;
 }
 
 const initialState: ProductsState = {
@@ -22,6 +23,7 @@ const initialState: ProductsState = {
   selectedCategory: "all",
   totalPages: 1,
   currentPage: 1,
+  count: 0,
 };
 
 // Async thunks
@@ -100,6 +102,7 @@ const productsSlice = createSlice({
       .addCase(fetchProducts.fulfilled, (state, action) => {
         state.loading = false;
         state.products = action.payload.data;
+        state.count = action.payload.count;
       })
       .addCase(fetchProducts.rejected, (state, action) => {
         state.loading = false;

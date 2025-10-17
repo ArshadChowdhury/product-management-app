@@ -36,16 +36,15 @@ export default function ProductForm({ product, mode }: ProductFormProps) {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
-    reset,
   } = useForm<ProductFormData>({
-    resolver: zodResolver(productSchema),
-    defaultValues: product
+    resolver: zodResolver(productSchema) as any,
+    defaultValues: (product
       ? {
           name: product.name,
           description: product.description,
           price: product.price,
           stock: product.stock,
-          category: product.category as any,
+          category: product.category,
           imageUrl: product.imageUrl || "",
         }
       : {
@@ -53,9 +52,9 @@ export default function ProductForm({ product, mode }: ProductFormProps) {
           description: "",
           price: 0,
           stock: 0,
-          category: "Electronics",
+          category: "",
           imageUrl: "",
-        },
+        }) as ProductFormData,
   });
 
   const onSubmit = async (data: ProductFormData) => {
@@ -73,6 +72,8 @@ export default function ProductForm({ product, mode }: ProductFormProps) {
       toast.error(err || `Failed to ${mode} product`);
     }
   };
+
+  const isLoading = isSubmitting || loading;
 
   return (
     <motion.div
@@ -256,7 +257,25 @@ export default function ProductForm({ product, mode }: ProductFormProps) {
             <X className="w-5 h-5" />
             Cancel
           </button>
+
           <button
+            type="submit"
+            disabled={isLoading}
+            className="flex-1 bg-gradient-to-r from-blue-600 to-purple-600 text-white py-3 rounded-xl font-semibold hover:shadow-lg transform hover:-translate-y-0.5 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+          >
+            {isLoading ? (
+              <>
+                <Loader2 className="w-5 h-5 animate-spin" />
+                {mode === "edit" ? "Updating..." : "Creating..."}
+              </>
+            ) : (
+              <>
+                <Check className="w-5 h-5" />
+                {mode === "edit" ? "Update Product" : "Create Product"}
+              </>
+            )}
+          </button>
+          {/* <button
             type="submit"
             disabled={loading || isSubmitting}
             className="flex-1 bg-gradient-to-r from-blue-600 to-purple-600 text-white py-3 rounded-xl font-semibold hover:shadow-lg transform hover:-translate-y-0.5 transition-all disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none flex items-center justify-center gap-2"
@@ -272,7 +291,7 @@ export default function ProductForm({ product, mode }: ProductFormProps) {
                 {mode === "edit" ? "Update Product" : "Create Product"}
               </>
             )}
-          </button>
+          </button> */}
         </div>
       </form>
     </motion.div>

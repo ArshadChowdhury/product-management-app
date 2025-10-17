@@ -181,7 +181,7 @@ export default function ProductDetailsPage() {
                     }
                   )}
                 </div>
-                <div>
+                {/* <div>
                   <span className="font-semibold">Last Updated:</span>{" "}
                   {new Date(selectedProduct.updatedAt).toLocaleDateString(
                     "en-US",
@@ -191,7 +191,7 @@ export default function ProductDetailsPage() {
                       day: "numeric",
                     }
                   )}
-                </div>
+                </div> */}
               </div>
             </div>
 
