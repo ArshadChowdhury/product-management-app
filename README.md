@@ -39,7 +39,7 @@ It demonstrates strong front-end architecture, client-side validation, responsiv
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/your-username/product-management-app.git
+git clone https://github.com/ArshadChowdhury/product-management-app.git
 cd product-management-app
 
 ```
