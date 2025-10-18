@@ -258,9 +258,9 @@ export default function ProductsPage() {
                         </span>
                         <span
                           className={`text-sm font-medium px-3 py-1 rounded-full ${
-                            product.stock > 50
+                            product.stock >= 20
                               ? "bg-green-100 text-green-700"
-                              : product.stock > 20
+                              : product.stock >= 10
                               ? "bg-yellow-100 text-yellow-700"
                               : "bg-red-100 text-red-700"
                           }`}
